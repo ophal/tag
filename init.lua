@@ -1,10 +1,10 @@
 local theme, env, add_css, slash, l = theme, env, add_css, settings.slash, l
 local tinsert, tconcat, pairs, ophal = table.insert, table.concat, pairs, ophal
 local add_js, arg, trim, header = add_js, arg, seawolf.text.trim, header
-local page_set_title, read, json = page_set_title, io.read, require 'dkjson'
+local page_set_title, json = page_set_title, require 'dkjson'
 local type, empty, error, goto = type, seawolf.variable.empty, error, goto
 local _SESSION, tonumber, _GET, ceil = _SESSION, tonumber, _GET, math.ceil
-local pager, print_t = pager, print_t
+local pager, print_t, request_get_body = pager, print_t, request_get_body
 local db_query, user_is_logged_in, db_last_insert_id
 
 local debug = debug
@@ -176,7 +176,7 @@ function handle_service()
     header('content-type', 'application/json; charset=utf-8')
 
     output = {success = false}
-    input = read '*a'
+    input = request_get_body()
     parsed, pos, err = json.decode(input, 1, nil)
 
     if err then
